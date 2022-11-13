@@ -13,9 +13,9 @@
 struct s_node
 {
     char lettre;
-    char flechies[20][30];
+    char **flechies;
+    int nb_flechies;
     struct s_node   *sons[MAX];
-    int depth;
 };
 
 typedef struct s_node t_node, *p_node;

@@ -7,25 +7,20 @@
 #include <string.h>
 #include "tree.h"
 
+
+
 void RemplirArbre(p_tree arbre_nom, p_tree arbre_adv, p_tree arbre_adj, p_tree arbre_vrb){
     FILE* fichier = NULL;
-    fichier = fopen("C:\\Users\\Elliott\\CLionProjects\\untitled35\\dictionnaire.txt", "r");
+    fichier = fopen("C:\\Users\\Elliott\\CLionProjects\\untitled35\\mini_dico.txt", "r");
     char mot_flechi[30], mot_base[30], type[30], l[1000];
-    while(*l!=EOF){
+    int compteur=0;
+    while(fgets(l, 1000, fichier)!=NULL){
         int i=0, j=0, k=0;
         mot_flechi[0]=mot_base[0]=type[0]='\0';
-        fgets(l, 1000, fichier);
         while((l[i]!=' ')&&(l[i]!=9)){
-            if((64<(int)l[i]) && ((int)l[i]<123)){
-                //printf("yes\n");
+            if((64<(int)l[i]) && ((int)l[i]<123)) {
                 //printf("%c\n", l[i]);
                 strncat(mot_flechi, &l[i], 1);
-            }
-            else{
-                //printf("no\n");
-                char carac = CaracSpecial(l[i+1]);
-                printf("%c\n", carac);
-                strncat(mot_flechi, &carac, 1);
             }
             i++;
         }
@@ -50,7 +45,13 @@ void RemplirArbre(p_tree arbre_nom, p_tree arbre_adv, p_tree arbre_adj, p_tree a
                 p_node temp = arbre_nom->root;
                 for(i=0; i<strlen(mot_base); i++){
                     code_asc = mot_base[i];
-                    temp->sons[code_asc - 97] = createNode(mot_base[i]);
+                    if(temp->sons[code_asc - 97]==NULL) {
+                        temp->sons[code_asc - 97] = createNode(mot_base[i]);
+                        arbre_nom->depth++;
+                    }
+                    else{
+                        temp->sons[code_asc - 97]->lettre=mot_base[i];
+                    }
                     //printf("%c\n", temp->sons[code_asc - 97]->lettre);
                     temp = temp->sons[code_asc - 97];
                 }
@@ -59,7 +60,13 @@ void RemplirArbre(p_tree arbre_nom, p_tree arbre_adv, p_tree arbre_adj, p_tree a
                 p_node temp = arbre_vrb->root;
                 for(i=0; i<strlen(mot_base); i++) {
                     code_asc = mot_base[i];
-                    temp->sons[code_asc - 97] = createNode(mot_base[i]);
+                    if(temp->sons[code_asc - 97]==NULL) {
+                        temp->sons[code_asc - 97] = createNode(mot_base[i]);
+                        arbre_vrb->depth++;
+                    }
+                    else{
+                        temp->sons[code_asc - 97]->lettre=mot_base[i];
+                    }
                     temp = temp->sons[code_asc - 97];
                 }
             }
@@ -67,7 +74,12 @@ void RemplirArbre(p_tree arbre_nom, p_tree arbre_adv, p_tree arbre_adj, p_tree a
                 p_node temp = arbre_adj->root;
                 for(i=0; i<strlen(mot_base); i++) {
                     code_asc = mot_base[i];
-                    temp->sons[code_asc - 97] = createNode(mot_base[i]);
+                    if(temp->sons[code_asc - 97]==NULL) {
+                        temp->sons[code_asc - 97] = createNode(mot_base[i]);
+                        arbre_adj->depth++;
+                    }
+                    else
+                        temp->sons[code_asc - 97]->lettre=mot_base[i];
                     temp = temp->sons[code_asc - 97];
                 }
             }
@@ -75,9 +87,29 @@ void RemplirArbre(p_tree arbre_nom, p_tree arbre_adv, p_tree arbre_adj, p_tree a
                 p_node temp = arbre_adv->root;
                 for(i=0; i<strlen(mot_base); i++) {
                     code_asc = mot_base[i];
-                    temp->sons[code_asc - 97] = createNode(mot_base[i]);
+                    if(temp->sons[code_asc - 97]==NULL) {
+                        temp->sons[code_asc - 97] = createNode(mot_base[i]);
+                        arbre_adv->depth++;
+                    }
+                    else{
+                        temp->sons[code_asc - 97]->lettre=mot_base[i];
+                    }
                     temp = temp->sons[code_asc - 97];
                 }
+            }
+        }
+        else{
+            if(ReconnaitreType(type)==1){
+                AjouterFlechie(arbre_nom, mot_base, mot_flechi);
+            }
+            else if(ReconnaitreType(type)==2){
+                AjouterFlechie(arbre_vrb, mot_base, mot_flechi);
+            }
+            else if(ReconnaitreType(type)==3){
+                AjouterFlechie(arbre_adj, mot_base, mot_flechi);
+            }
+            else if(ReconnaitreType(type)==4){
+                AjouterFlechie(arbre_adv, mot_base, mot_flechi);
             }
         }
     }
@@ -96,6 +128,9 @@ int ReconnaitreType(char* type){
         return 4;
 }
 
+
+
+
 /*char CaracSpecial(char carac_spe){
     //printf("%s", carac_spe);
     if((carac_spe=="á")||(carac_spe=="ó")||(carac_spe=="ñ"))
@@ -108,5 +143,31 @@ int ReconnaitreType(char* type){
         return 'u';
     else if((strcmp(carac_spe[0], "º")==0))
         return 'c';
+
+}*/
+
+void displayTree(p_node tree){
+    if(tree==NULL){
+        return;
+    }
+    for(int i=0; i<26; i++){
+        displayTree(tree->sons[i]);
+    }
+    printf("%c", tree->lettre);
+}
+
+void AjouterFlechie(p_tree tree, char *mot_base, char *mot_flechi){
+    p_node temp = tree->root;
+    for(int i=0; i<strlen(mot_base); i++){
+        int code_asc = mot_base[i];
+        temp = temp->sons[code_asc-97];
+    }
+    for(int j=0; j< strlen(mot_flechi); j++){
+        temp->flechies[temp->nb_flechies][j] = mot_flechi[j];
+    }
+    temp->nb_flechies++;
+}
+
+/*t_tree CreateTree(){
 
 }*/
