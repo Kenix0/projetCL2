@@ -13,10 +13,6 @@ int main() {
     adverbes.root = createNode('0');
     adjectifs.root = createNode('0');
     noms.depth = verbes.depth = adverbes.depth = adjectifs.depth = 0;
-    /*tab_chaine = calloc(20, sizeof(char));
-    for(int i=0; i<20; i++){
-        tab_chaine[i] = calloc(30, sizeof(char));
-    }*/
     RemplirArbre(&noms, &adverbes, &adjectifs, &verbes);
     //noms.root->sons[18]->flechies[0][0]='a';
     //printf("%c", noms.root->sons[18]->flechies[0][0]='a');

@@ -17,7 +17,7 @@ void RemplirArbre(p_tree, p_tree, p_tree, p_tree);
 int ReconnaitreType(char*);
 char CaracSpecial(char);
 void displayTree(p_node);
-void AjouterFlechie(p_tree, char*, char*);
+void AjouterFlechie(p_tree, char*, char*, char*);
 t_tree CreateTree();
 
 #endif //PROJETGÉNÉRATEURPHRASES_TREE_H
