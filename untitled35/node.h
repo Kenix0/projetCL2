@@ -8,12 +8,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 26
+#define MAX 27
 
 struct s_node
 {
     char lettre;
-    char **flechies;
+    char flechies[100][50];
     int nb_flechies;
     struct s_node   *sons[MAX];
 };

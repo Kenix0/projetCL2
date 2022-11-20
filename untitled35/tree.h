@@ -18,6 +18,10 @@ int ReconnaitreType(char*);
 char CaracSpecial(char);
 void displayTree(p_node);
 void AjouterFlechie(p_tree, char*, char*, char*);
-t_tree CreateTree();
+int MotExiste(p_node, char*);
+char* ExtraireMotHasard(p_node, char*);
+char* GenererPhraseConj(p_node, p_node, p_node, p_node);
+void RenvoiFlechies(p_node, char*);
+char* Test();
 
 #endif //PROJETGÉNÉRATEURPHRASES_TREE_H
