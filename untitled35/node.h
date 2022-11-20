@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 27
+#define MAX 28
 
 struct s_node
 {

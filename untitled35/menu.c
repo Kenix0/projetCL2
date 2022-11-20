@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "menu.h"
 
+//choix a faire dans le menu
 int choix(){
     int n;
     printf("1: RECHERCHER UNE FORME DE BASE\n2: RECHERCHER UN MOT\n3: GENERER UN MOT AU HASARD\n4: GENERER UNE PHRASE AU HASARD\n5: QUITTER\n");
@@ -76,43 +77,67 @@ void menu(t_tree noms,t_tree verbes,t_tree adverbes,t_tree adjectifs){
             char nom2[30]="\0";
             char nom3[30]="\0";
             char nom4[30]="\0";
+            char nom5[30]="\0";
+            char nom6[30]="\0";
             char verbe1[30]="\0";
             char verbe2[30]="\0";
             char verbe3[30]="\0";
-            char ajdectif1[30]="\0";
-            char ajdectif2[30]="\0";
+            char verbe4[30]="\0";
+            char verbe5[30]="\0";
+            char adjectif1[30]="\0";
+            char adjectif2[30]="\0";
+            char adjectif3[30]="\0";
+            char adjectif4[30]="\0";
+            char adverbe1[30]="\0";
 
+            //choisir le modele de phrase a renvoyer
             int option;
             printf("Quel modele de phrase voulez-vous generer ?\n");
             printf("(entrer le numero associe)\n");
             printf(" \n");
             do {
-                printf("1. forme de basse : nom - adjectif - verbe - nom\n");
-                printf("2. forme de basse : nom - \"qui\" - verbe - verbe - nom - adjectif\n");
-                printf("3. forme flechie : nom - adjectif - verbe - nom\n");
-                printf("4. forme flechie : nom - \"qui\" - verbe - verbe - nom - adjectif\n");
-                printf("5. quitter\n");
+                printf("1. forme de base : nom - adjectif - verbe - nom\n");
+                printf("2. forme de base : nom - \"qui\" - verbe - verbe - nom - adjectif\n");
+                printf("3. forme de base : nom - adjectif - verbe - adverbe - \"et\" - verbe - nom - adjectif \n");
+                printf("4. forme flechie : nom - adjectif - verbe - nom\n");
+                printf("5. forme flechie : nom - \"qui\" - verbe - verbe - nom - adjectif\n");
+                printf("6. forme flechie : nom - adjectif - verbe - adverbe - \"et\" - verbe - nom - adjectif \n");
+                printf("7. quitter\n");
                 scanf("%d", &option);
-            } while ((option < 1) || (option > 5));
+            } while ((option < 1) || (option > 6));
             if (option == 1){
                 ExtraireMotHasard(noms.root, nom1);
                 ExtraireMotHasard(noms.root, nom2);
                 ExtraireMotHasard(verbes.root, verbe1);
-                ExtraireMotHasard(adjectifs.root, ajdectif1);
+                ExtraireMotHasard(adjectifs.root, adjectif1);
                 printf(" \n");
-                printf("%s %s %s %s\n\n", nom1, ajdectif1, verbe1, nom2);
+                printf("%s %s %s %s\n\n", nom1, adjectif1, verbe1, nom2);
             }
             if (option == 2){
                 ExtraireMotHasard(noms.root, nom3);
                 ExtraireMotHasard(noms.root, nom4);
                 ExtraireMotHasard(verbes.root,verbe2);
                 ExtraireMotHasard(verbes.root, verbe3);
-                ExtraireMotHasard(adjectifs.root, ajdectif2);
+                ExtraireMotHasard(adjectifs.root, adjectif2);
                 printf(" \n");
-                printf("%s qui %s %s %s %s\n\n", nom3, verbe2, verbe3, nom4, ajdectif2);
-
-                //rajouter la creation de phrase en forme flechie ici
+                printf("%s qui %s %s %s %s\n\n", nom3, verbe2, verbe3, nom4, adjectif2);
             }
+            if (option == 3){
+                ExtraireMotHasard(noms.root, nom5);
+                ExtraireMotHasard(noms.root, nom6);
+                ExtraireMotHasard(verbes.root,verbe4);
+                ExtraireMotHasard(verbes.root, verbe5);
+                ExtraireMotHasard(adjectifs.root, adjectif3);
+                ExtraireMotHasard(adjectifs.root, adjectif4);
+                ExtraireMotHasard(adverbes.root, adverbe1);
+                printf(" \n");
+                printf("%s %s %s %s et %s %s %s\n\n", nom5, adjectif3, verbe3, adverbe1, verbe4, nom6, adjectif2);
+            }
+                if (option >3) {
+                    //rajouter la creation de phrase en forme flechie ici
+                    fin = true;
+                    break;
+                }
         }
         if (x ==5){
             //permet de quitter le programme
