@@ -1,3 +1,7 @@
+PROJET C : Générateur de phrase automatique et recherche de mot
+
+Projet C de L2.
+
 Personne ayant réalisé le projet: Elliott Halgand, Antoine Baudet et Adrien HOUEE.
 
 S'assurer de la présence des fichiers : main.c, tree.c, tree.h, menu.c, menu.h, node.c, node.h, dictionnaire_non_accentue
